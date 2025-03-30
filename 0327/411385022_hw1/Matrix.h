@@ -28,7 +28,7 @@ public:
     std::vector<double> getCol(int) const;
     std::vector<std::vector<double>> getMatrix() const;
     
-    bool equal(Matrix *) const;
+    bool isTimesOf(Matrix *) const;
 
     void printMatrix() const;
 private:

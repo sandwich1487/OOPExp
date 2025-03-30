@@ -83,9 +83,11 @@ void Matrix::divide(Matrix *A, Matrix *B)
     double determinant = A->det();
     if (determinant == 0)
     {
-        if (A->equal(B))
+        if (A->isTimesOf(B))
         {
             this->setToUnit();
+            double multiple = B->getElement(0, 0) / A->getElement(0, 0);
+            this->multipliedBy(multiple);
             return;
         }
         for (int i = 0; i < this->N; ++i)
@@ -205,11 +207,24 @@ vector<vector<double>> Matrix::getMatrix() const
 }
 
 
-bool Matrix::equal(Matrix *A) const
+bool Matrix::isTimesOf(Matrix *A) const
 {
     int n = this->N;
     if (n != A->getDimension()) return false;
-    return this->matrix == A->getMatrix();
+
+    double target;
+    double ratio = A->getElement(0, 0) / this->matrix[0][0];
+    for (int i = 0; i < n; ++i)
+    for (int j = 0; j < n; ++j)
+    {
+        target = A->getElement(i, j) / this->matrix[i][j];
+        if (target != ratio)
+        {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 
