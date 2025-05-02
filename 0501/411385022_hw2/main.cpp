@@ -61,7 +61,7 @@ bool IsOk(int n, int m)
     ListNode* last = current;
     current = current->next;
 
-    while (current != last)
+    while (true)
     {
         current = current->next;
         delete last->next;
@@ -75,6 +75,17 @@ bool IsOk(int n, int m)
         if (current->val == target) break;
     }
 
-    if (n == 1) return true;
+    if (n == 1)
+    {
+        delete current;
+        return true;
+    }
+    for ( ; n > 1; --n)
+    {
+        last = current;
+        current = current->next;
+        delete last;
+    }
+    delete current;
     return false;
 }
